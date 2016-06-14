@@ -33,7 +33,7 @@ clrschms = {
 root.geometry('651x481+51+51')
 root.title("*Untitled - My Notepad")
 root.wm_iconbitmap('Notepad++.ico')
-root.configure(background='#e2ffff')
+root.configure(background='#1f1f1f')
 
 
 # menubar functions
