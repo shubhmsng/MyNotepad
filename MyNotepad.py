@@ -40,49 +40,48 @@ root.configure(background='#1f1f1f')
 
 def speech():
     r = sr.Recognizer()
-    tkinter.messagebox.showinfo("Speech", "press enter to start speaking and say stop to quit!!")
 
-    with sr.Microphone() as source:
-        r.adjust_for_ambient_noise(source)
-        print("set min threshold energy to {}".format(r.energy_threshold))
+    f = tkinter.messagebox.askyesno("Speech to text", "press Yes to start speaking and No to quit!!")
+    if(f):
+        with sr.Microphone() as source:
+            r.adjust_for_ambient_noise(source)
+            print("set min threshold energy to {}".format(r.energy_threshold))
 
-        print("Say something")
-        audio = r.listen(source)
-    try:
-        a = r.recognize_google(audio)
+            print("Say something")
+            audio = r.listen(source)
+        try:
+            a = r.recognize_google(audio)
 
-    except:
-        print("speech error")
-        tkinter.messagebox.showinfo("Error", "An error occurred make sure you have connected to internet!!.")
+        except:
+            print("speech error")
+            tkinter.messagebox.showinfo("Error", "An error occurred during speech recognition make sure you have connected to internet!!.")
+        try:
+            if a == 'exit':
+                doSomething()
 
-    try:
-        if a == 'exit':
-            doSomething()
+            elif a == 'new + line':
+                textPad.insert(textPad.index(INSERT), '\n')
 
-        elif a == 'new + line':
-            textPad.insert(textPad.index(INSERT), '\n')
+            elif a == 'back + space':
+                a = textPad.index(INSERT)
+                i, j = a.split('.')
+                j = str(int(j) - 1)
+                b = str(i) + '.' + str(j)
+                print(a, b)
+                textPad.delete(b, a)
 
-        elif a == 'back + space':
-            a = textPad.index(INSERT)
-            i, j = a.split('.')
-            j = str(int(j) - 1)
-            b = str(i) + '.' + str(j)
-            print(a, b)
-            textPad.delete(b, a)
+            else:
+                i, j = textPad.index(INSERT).split('.')
+                if j != '0':
+                    textPad.insert(textPad.index(INSERT), " ")
+                textPad.insert(textPad.index(INSERT), a)
+        except:
+            pass
 
-        elif a == 'stop':
-            tkinter.messagebox.showinfo("Stop", "Speech to text function has been stopped")
-            return
-        else:
-            i, j = textPad.index(INSERT).split('.')
-            if j != '0':
-                textPad.insert(textPad.index(INSERT), " ")
-            textPad.insert(textPad.index(INSERT), a)
-    except:
-        pass
-
-    speech()
-
+        speech()
+    else:
+        tkinter.messagebox.showinfo("Speech to text", "Speech to text function has been stopped")
+        return
 
 def text_to_speech():
 
@@ -362,12 +361,12 @@ def pop_up(event):
 
 def help_(event=None):
     tkinter.messagebox.showinfo("Help",
-                                "What is Notepad?\nNotepad is a basic text-editing program and it's most commonly used to view or edit text files.\nA text file is a file type typically identified by the .txt file name extension.\nNot only .txt file you open , edit  and save any type of file.")
+                                "What is Notepad?\nNotepad is a text-editing program and you can use it for view, edit, save editable files.\nA text file is a file type typically identified by the .txt file name extension.\nYou may view , edit  and save all editale files.")
 
 
 def about(event=None):
     tkinter.messagebox.showinfo("About",
-                                "\n\t      My Notepad\n\n\n This notepad is developed by shubham singh\n Btech(CSE)(2013-17) student at IERT Alld.\n You can follow me on facebook: \n facebook.com/shubhamatiert\n Email-id: shubhmsing@gmail.com \n Mob.No. 7783984676")
+                                "\n\t      My Notepad\n\n\n This notepad hsa been developed by shubham singh\n Btech(CSE)(2013-17) student at IERT Alld.\n Contact details : \n facebook.com/shubhamatiert\n Email-id: shubhmsing@gmail.com \n Mob.No. 7783984676")
 
 
 def quit_(event=None):
